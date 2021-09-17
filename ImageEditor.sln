@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageEditor", "ImageEditor.csproj", "{F3C7893A-7AB5-45A5-8BA4-837D0793ADAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3C7893A-7AB5-45A5-8BA4-837D0793ADAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C7893A-7AB5-45A5-8BA4-837D0793ADAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C7893A-7AB5-45A5-8BA4-837D0793ADAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C7893A-7AB5-45A5-8BA4-837D0793ADAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26D7F5C1-4DFC-47EE-809A-7D883272F677}
+	EndGlobalSection
+EndGlobal

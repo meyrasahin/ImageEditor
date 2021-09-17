@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["title"] = "Square";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Image Editor</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <style>
+        .croppie-container {
+            width: 100%;
+            height: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card" style="margin-top:10px;">
+                    <div class="card-header">Black White Filter</div>
+                    <div class="card-body">
+                        <div id="main-cropper"></div>
+                        <input type="file" id="select" class="form-control" value="Choose Image" accept="image/*">
+                        <button id="btnupload" style="margin-top: 10px;" name="btnupload" class="btn btn-outline-dark">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn text-success" href="/Home/Index">Back to Home</a>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    //initialize Croppie
+    var basic = $('#main-cropper').croppie
+        ({
+            //viewport: { width: 300, height: 300, type: 'circle' },
+            viewport: { width: 300, height: 300 },
+            boundary: { width: 500, height: 400 },
+            showZoomer: false,
+            enableResize: true,
+            url: '/DefaultImages/preview.jpg',
+            format: 'png' //'jpeg'|'png'|'webp'
+        });
+
+    //Reading the contents of the specified Blob or File
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#main-cropper').croppie('bind', {
+                    url: e.target.result
+                });
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Change Event to Read file content from File input
+    $('#select').on('change', function () { readFile(this); });
+
+
+    $('#btnupload').on('click', function ()
+    {
+        basic.croppie('result', 'blob').then(function (blob)
+        {
+            var formData = new FormData();
+
+            formData.append('filename', 'FileName.png');
+            formData.append('blob', blob);
+            var myAppUrlSettings =
+            {
+                MyUsefulUrl: '@Url.Action("BlackWhite", "Filter")'
+            }
+            var request = new XMLHttpRequest();
+            request.open('POST', myAppUrlSettings.MyUsefulUrl);
+            request.send(formData);
+            request.onreadystatechange = function () {
+               // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+                {
+                    var response = JSON.parse(request.responseText);
+
+                    if (response.message == "OK")
+                    {
+                        alert('Photo Cropped Successfully!');
+                        window.location.reload();
+                    }
+                    if (response.message == "ERROR")
+                    {
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+    });
+
+
+</script>
+
